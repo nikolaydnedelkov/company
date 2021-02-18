@@ -1,6 +1,5 @@
 package com.playtech.jpa.salaries.model;
 
-import com.playtech.jpa.employees.model.EmployeeModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +19,5 @@ public class SalaryModel {
 
     private LocalDate toDate;
 
-    private EmployeeModel employee;
+    private String employeeId;
 }

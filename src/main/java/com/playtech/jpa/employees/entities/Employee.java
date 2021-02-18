@@ -1,7 +1,6 @@
 package com.playtech.jpa.employees.entities;
 
 import com.playtech.jpa.tasks.enitities.Task;
-import io.vavr.collection.HashSet;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 

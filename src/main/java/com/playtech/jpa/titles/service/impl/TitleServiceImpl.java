@@ -1,31 +1,23 @@
 package com.playtech.jpa.titles.service.impl;
 
-import com.playtech.jpa.employees.entities.Employee;
-import com.playtech.jpa.employees.entities.EmployeeRepository;
-import com.playtech.jpa.employees.model.EmployeeModel;
-import com.playtech.jpa.employees.service.converter.EmployeeConverter;
 import com.playtech.jpa.titles.enitities.Title;
 import com.playtech.jpa.titles.enitities.TitleRepository;
 import com.playtech.jpa.titles.model.TitleModel;
 import com.playtech.jpa.titles.service.TitleService;
 import com.playtech.jpa.titles.service.converter.TitleConverter;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TitleServiceImpl implements TitleService {
 
     private final TitleRepository titleRepository;
     private final TitleConverter titleConverter;
-    private final EmployeeRepository employeeRepository;
-    private final EmployeeConverter employeeConverter;
-
 
     @Override
     public TitleModel createTitle(TitleModel model) {
@@ -66,24 +58,5 @@ public class TitleServiceImpl implements TitleService {
         log.info("Get all titles by employee ID END: {}", titles);
 
         return titles;
-    }
-
-    @Override
-    public List<EmployeeModel> getAllEmployeesByTitle(String title) {
-        log.info("Get all employees by title name BEGIN: ");
-
-        final List<Title> titles = titleRepository.findByTitle(title);
-
-        final List<Employee> employees = employeeRepository.findByIdIn(titles.stream()
-                                                                             .map(Title::getEmployee)
-                                                                             .map(Employee::getId)
-                                                                             .collect(Collectors.toList()));
-
-        final List<EmployeeModel> employeeModels = employeeConverter.convertToModels(employees);
-
-
-        log.info("Get all employees by title name END: {}", employeeModels);
-
-        return employeeModels;
     }
 }

@@ -1,8 +1,5 @@
 package com.playtech.jpa.salaries.service.converter;
 
-import com.playtech.jpa.employees.entities.Employee;
-import com.playtech.jpa.employees.model.EmployeeModel;
-import com.playtech.jpa.employees.service.converter.EmployeeConverter;
 import com.playtech.jpa.salaries.entities.Salary;
 import com.playtech.jpa.salaries.model.SalaryModel;
 import lombok.AllArgsConstructor;
@@ -18,17 +15,13 @@ import static java.util.stream.Collectors.toList;
 @AllArgsConstructor
 public class SalaryConverter {
 
-    private final EmployeeConverter employeeConverter;
-
     public SalaryModel convertToModel(final Salary salary) {
         if (salary == null) {
             return null;
         }
 
         ModelMapper mapper = new ModelMapper();
-        SalaryModel model = mapper.map(salary, SalaryModel.class);
-        model.setEmployee(employeeConverter.convertToModel(salary.getEmployee()));
-        return model;
+        return mapper.map(salary, SalaryModel.class);
     }
 
     public Salary convertToEntity(final SalaryModel model) {
@@ -37,9 +30,7 @@ public class SalaryConverter {
         }
 
         ModelMapper mapper = new ModelMapper();
-        Salary salary = mapper.map(model, Salary.class);
-        salary.setEmployee(employeeConverter.convertToEntity(model.getEmployee()));
-        return salary;
+        return mapper.map(model, Salary.class);
     }
 
     public List<SalaryModel> convertToModels(final List<Salary> salaries) {

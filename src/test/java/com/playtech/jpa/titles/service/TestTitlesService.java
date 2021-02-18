@@ -37,20 +37,20 @@ public class TestTitlesService {
                 "Junior Software Developer",
                 LocalDate.of(2018, 10, 10),
                 LocalDate.of(2019, 12, 1),
-                createdEmployee);
+                createdEmployee.getId());
 
         final TitleModel createdTitle1 = titleService.createTitle(title1);
 
         assertEquals(title1.getTitle(), createdTitle1.getTitle());
         assertEquals(title1.getFromDate(), createdTitle1.getFromDate());
         assertEquals(title1.getToDate(), createdTitle1.getToDate());
-        assertEquals(title1.getEmployee(), createdTitle1.getEmployee());
+        assertEquals(title1.getEmployeeId(), createdTitle1.getEmployeeId());
 
         final TitleModel title2 = new TitleModel(null,
                 "Software Engineer",
                 LocalDate.of(2019, 12, 2),
                 LocalDate.of(2022, 1, 1),
-                createdEmployee);
+                createdEmployee.getId());
 
         titleService.createTitle(title2);
 
@@ -63,11 +63,11 @@ public class TestTitlesService {
                 "Software Engineer",
                 LocalDate.of(2019, 5, 22),
                 LocalDate.of(2021, 8, 11),
-                createdEmployee2);
+                createdEmployee2.getId());
 
         titleService.createTitle(titleEmil);
 
-        titleService.getAllEmployeesByTitle("Software Engineer");
+        employeeService.getAllEmployeesByTitle("Software Engineer");
     }
 
     private EmployeeModel createEmployee(String firstName, String lastName) {

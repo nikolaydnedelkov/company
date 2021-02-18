@@ -6,12 +6,16 @@ import com.playtech.jpa.employees.model.EmployeeModel;
 import com.playtech.jpa.employees.service.EmployeeService;
 import com.playtech.jpa.employees.service.converter.EmployeeConverter;
 import com.playtech.jpa.exceptions.HttpBadRequestException;
+import com.playtech.jpa.titles.enitities.Title;
+import com.playtech.jpa.titles.enitities.TitleRepository;
+import com.playtech.jpa.titles.service.converter.TitleConverter;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -20,6 +24,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeConverter employeeConverter;
     private final EmployeeRepository employeeRepository;
+    private final TitleRepository titleRepository;
+    private final TitleConverter titleConverter;
 
     @Override
     public EmployeeModel createEmployee(EmployeeModel model) {
@@ -49,7 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.info("Update employee BEGIN: {}", model);
 
         if (!employeeRepository.existsById(model.getId())) {
-            throw new HttpBadRequestException("Car entity does not exist for id: " + model.getId());
+            throw new HttpBadRequestException("Employee entity does not exist for id: " + model.getId());
         }
 
         final Employee employee = employeeConverter.convertToEntity(model);
@@ -88,5 +94,23 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.info("Get all employees END: {}", employees);
 
         return employees;
+    }
+    @Override
+    public List<EmployeeModel> getAllEmployeesByTitle(String title) {
+        log.info("Get all employees by title name BEGIN: ");
+
+        final List<Title> titles = titleRepository.findByTitle(title);
+
+        final List<Employee> employees = employeeRepository.findByIdIn(titles.stream()
+                                                                             .map(Title::getEmployee)
+                                                                             .map(Employee::getId)
+                                                                             .collect(Collectors.toList()));
+
+        final List<EmployeeModel> employeeModels = employeeConverter.convertToModels(employees);
+
+
+        log.info("Get all employees by title name END: {}", employeeModels);
+
+        return employeeModels;
     }
 }

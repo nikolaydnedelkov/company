@@ -13,5 +13,4 @@ public interface TitleService {
 
     List<TitleModel> getAllTitlesByEmployee(String id);
 
-    List<EmployeeModel> getAllEmployeesByTitle(String title);
 }

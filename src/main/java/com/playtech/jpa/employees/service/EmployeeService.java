@@ -15,4 +15,6 @@ public interface EmployeeService {
     EmployeeModel getById(String id);
 
     List<EmployeeModel> getAllEmployees();
+
+    List<EmployeeModel> getAllEmployeesByTitle(String title);
     }

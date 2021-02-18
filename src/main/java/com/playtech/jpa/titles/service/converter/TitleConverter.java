@@ -1,8 +1,7 @@
 package com.playtech.jpa.titles.service.converter;
 
 import com.playtech.jpa.employees.service.converter.EmployeeConverter;
-import com.playtech.jpa.salaries.entities.Salary;
-import com.playtech.jpa.salaries.model.SalaryModel;
+
 import com.playtech.jpa.titles.enitities.Title;
 import com.playtech.jpa.titles.model.TitleModel;
 import lombok.AllArgsConstructor;
@@ -26,9 +25,7 @@ public class TitleConverter {
         }
 
         ModelMapper mapper = new ModelMapper();
-        TitleModel model = mapper.map(title, TitleModel.class);
-        model.setEmployee(employeeConverter.convertToModel(title.getEmployee()));
-        return model;
+        return mapper.map(title, TitleModel.class);
     }
 
     public Title convertToEntity(final TitleModel model) {
@@ -37,9 +34,7 @@ public class TitleConverter {
         }
 
         ModelMapper mapper = new ModelMapper();
-        Title title = mapper.map(model, Title.class);
-        title.setEmployee(employeeConverter.convertToEntity(model.getEmployee()));
-        return title;
+        return mapper.map(model, Title.class);
     }
 
     public List<TitleModel> convertToModels(final List<Title> titles) {

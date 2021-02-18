@@ -36,20 +36,20 @@ public class TestSalariesService {
                 10,
                 LocalDate.of(2018, 10, 10),
                 LocalDate.of(2019, 12, 1),
-                createdEmployee);
+                createdEmployee.getId());
 
         final SalaryModel createdSalary1 = salaryService.createSalary(salary1);
 
         assertEquals(salary1.getSalary(), createdSalary1.getSalary());
         assertEquals(salary1.getFromDate(), createdSalary1.getFromDate());
         assertEquals(salary1.getToDate(), createdSalary1.getToDate());
-        assertEquals(salary1.getEmployee(), createdSalary1.getEmployee());
+        assertEquals(salary1.getEmployeeId(), createdSalary1.getEmployeeId());
 
         final SalaryModel salary2 = new SalaryModel(null,
                 20,
                 LocalDate.of(2019, 12, 2),
                 LocalDate.of(2022, 1, 1),
-                createdEmployee);
+                createdEmployee.getId());
 
         final SalaryModel createdSalary2 = salaryService.createSalary(salary2);
 
